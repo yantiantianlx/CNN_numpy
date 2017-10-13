@@ -1,0 +1,45 @@
+工作环境：
+    Python 3.5.3
+    numpy 1.13.0
+    cv2 3.3.0 (测试图片文件需要使用)
+
+a.	网络结构图
+    见word。
+
+b.	train源码及执行命令
+    train.py:
+        读取训练集数据，训练，总共训练episode次；
+        每save_step次保存一次模型，只保留最近的一个；
+        每val_step步测试验证集，默认验证集5000大小；
+        每display_step步，显示训练集loss；
+        bach_size, 批大小；
+        learning_rate 学习率。
+    命令：python train.py 数据集路径 模型路径 总迭代次数episode 模型保存save_step
+                          验证集测试val_step 训练集loss显示display_step bach_size learning_rate
+    如：python train.py data/ model/ 10000 5000 100 20 32 0.001
+
+
+c.	test_set评测源码及执行命令
+    test.py:
+        从模型路径加载模型文件，测试数据集中测试集的num个样本；
+        输出测试loss和准确率
+    命令：python test.py 数据集路径 模型路径 测试数量num
+    如： python test.py data/ model/ 10000
+
+d.	inference脚本（支持读一个文件夹的图片，输出结果）
+    test_img.py：
+        加载模型文件，测试图片文件夹图片结果；
+        输出每张图片的预测标签
+    命令：python test_img.py 模型路径 测试图片路径
+    如： python test_img.py test_img/ model/
+
+e.  train出的最优model文件, train_error, test_error
+    模型文件为：./model
+    train: loss--1.5左右 accuracy-- 0.98以上
+    test: loss--1.50113146501 accuracy-- 0.9819 (测试10000张)
+
+其他文件：
+    mnist.py : 读mnist数据集，参考tensorflow
+    im2col.py: 辅助卷积层运算
+    layers.py: 包含卷积层/激活层/全连层/损失层的定义
+    net.py: 网络结构
